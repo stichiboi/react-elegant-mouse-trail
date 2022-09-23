@@ -2,7 +2,7 @@
   "name": "@stichiboi/react-elegant-mouse-trail",
   "version": "0.1.0",
   "description": "Add some spice to your mouse cursor",
-  "main": "index.js",
+  "main": "src/index.tsx",
   "scripts": {
     "test": "npm test",
     "storybook": "start-storybook -p 6006",
