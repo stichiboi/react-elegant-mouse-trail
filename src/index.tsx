@@ -1,0 +1,1 @@
+export {MouseTrail} from "./MouseTrail"
