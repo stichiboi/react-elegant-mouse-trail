@@ -31,6 +31,12 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
+  "eslintConfig": {
+    "plugins": [
+      "react"
+    ],
+    "extends": ["eslint:all", "plugin:react/all"]
+  },
   "devDependencies": {
     "@babel/core": "^7.19.1",
     "@storybook/addon-actions": "^6.5.12",
@@ -43,6 +49,8 @@
     "@storybook/testing-library": "^0.0.13",
     "@types/react": "^18.0.21",
     "babel-loader": "^8.2.5",
+    "eslint": "^8.23.1",
+    "eslint-plugin-react": "^7.31.8",
     "html-webpack-plugin": "^5.5.0",
     "webpack": "^5.74.0"
   }

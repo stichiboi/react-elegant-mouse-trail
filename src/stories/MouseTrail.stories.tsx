@@ -11,6 +11,18 @@ export default {
     */
     title: 'Mouse Trail',
     component: MouseTrail,
+    argTypes: {
+        lag: {
+            control: {
+                type: 'range', min: '0.1', max: '0.99', step: '0.01'
+            }
+        },
+        lineDuration: {
+            control: {
+                type: 'range', min: '0.1', max: '5', step: '0.1'
+            }
+        }
+    }
 } as ComponentMeta<typeof MouseTrail>;
 
-export const Primary: ComponentStory<typeof MouseTrail> = () => <MouseTrail/>;
+export const Primary: ComponentStory<typeof MouseTrail> = (args) => <MouseTrail {...args}/>;

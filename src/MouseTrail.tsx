@@ -20,12 +20,20 @@ const defaultStyle: CSSProperties = {
     left: 0,
 }
 
-export function MouseTrail(): JSX.Element {
-    const LINE_DURATION = 1;
-    const LINE_WIDTH_START = 8;
-    const STROKE_COLOR = `rgb(${[255, 0, 0].join(', ')})`;
-    const LAG = 0.92;
-    const MAX_AGE = LINE_DURATION * 1000 / 60;
+interface MouseTrailProps {
+    lineDuration?: number;
+    lineWidthStart?: number;
+    strokeColor?: string;
+    lag?: number;
+}
+
+export function MouseTrail({lineDuration, lineWidthStart, strokeColor, lag}: MouseTrailProps): JSX.Element {
+    lineDuration ||= 1;
+    lineWidthStart ||= 8;
+    strokeColor ||= `rgb(${[255, 0, 0].join(', ')})`;
+    lag ||= 0.92;
+
+    const MAX_AGE = lineDuration * 1000 / 60;
 
     const mouseLocation = useRef<Coords>({x: 0, y: 0});
     const points = useRef<Point[]>([]);
@@ -65,19 +73,19 @@ export function MouseTrail(): JSX.Element {
             if (point.age > MAX_AGE) {
                 points.current.splice(i, 1);
             } else {
-                const lineWeight = LINE_WIDTH_START / (point.age * 2)
-                makePath(ctx, point, prevPoint, STROKE_COLOR, lineWeight);
+                const lineWeight = lineWidthStart / (point.age * 2)
+                makePath(ctx, point, prevPoint, strokeColor, lineWeight);
             }
         });
-    }, [points, makePath, MAX_AGE, LINE_WIDTH_START, STROKE_COLOR]);
+    }, [points, makePath, MAX_AGE, lineWidthStart, strokeColor]);
 
     const draw = useCallback(() => {
         const mouse = mouseLocation.current;
         const lastPoint: Point = points.current[points.current.length - 1] || mouse;
-        const x = mouse.x - (mouse.x - lastPoint.x) * LAG;
-        const y = mouse.y - (mouse.y - lastPoint.y) * LAG;
+        const x = mouse.x - (mouse.x - lastPoint.x) * lag;
+        const y = mouse.y - (mouse.y - lastPoint.y) * lag;
         points.current.push({x, y, age: 0});
-    }, [mouseLocation, points]);
+    }, [mouseLocation, points, lag]);
 
     useEffect(() => {
         document.body.addEventListener('mousemove', updateMouse);
