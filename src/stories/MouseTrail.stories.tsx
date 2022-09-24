@@ -12,6 +12,11 @@ export default {
     title: 'Mouse Trail',
     component: MouseTrail,
     argTypes: {
+        strokeColor: {
+            control: {
+                type: 'color', presetColors: ['red', 'green']
+            }
+        },
         lag: {
             control: {
                 type: 'range', min: '0.1', max: '0.99', step: '0.01'
@@ -20,6 +25,11 @@ export default {
         lineDuration: {
             control: {
                 type: 'range', min: '0.1', max: '5', step: '0.1'
+            }
+        },
+        lineWidthStart: {
+            control: {
+                type: 'range', min: '5', max: '50', step: '1'
             }
         }
     }

@@ -15,15 +15,26 @@ export function CanvasAnimation({
         }
     }, [context]);
 
+    // wrap in refs since it will be used as an animation frame callback
+    const drawRef = useRef(draw);
+    const animatePointsRef = useRef(animatePoints);
+
+    useEffect(() => {
+        drawRef.current = draw;
+        animatePointsRef.current = animatePoints;
+    }, [draw, drawRef, animatePointsRef, animatePoints]);
+
     const loop = useCallback(() => {
         if (canvas.current) {
-            draw(canvas.current);
+            drawRef.current(canvas.current);
         }
         if (context.current) {
-            animatePoints(context.current);
+            animatePointsRef.current(context.current);
         }
         window.requestAnimationFrame(loop);
-    }, [draw, animatePoints]);
+    }, [drawRef, animatePointsRef]);
+
+    useEffect(() => loop(), []);
 
     useEffect(() => {
         const tempContext = canvas.current.getContext('2d');
@@ -33,7 +44,6 @@ export function CanvasAnimation({
 
         window.addEventListener('resize', resizeCanvas);
 
-        loop();
         resizeCanvas();
         return () => {
             window.removeEventListener('resize', resizeCanvas);
