@@ -5,6 +5,13 @@ A plug and play react element that follows your cursor.
 Every frame, it records the position of the mouse.
 Then it draws an arc between all the points, creating a cool trail.
 
+Install with
+```shell
+npm i @stichiboi/react-elegant-mouse-trail
+```
+
+## Demo
+
 [See it in action](https://stichiboi-website-next.vercel.app/)
 
 Or you can clone the repo and run
