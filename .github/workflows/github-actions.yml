@@ -13,7 +13,6 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://npmjs.com'
-      - run: npm install
       - run: npm ci
       - run: npm publish --access public
         env:
