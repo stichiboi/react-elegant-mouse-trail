@@ -7,7 +7,7 @@ interface Coords {
 }
 
 interface Point extends Coords {
-    age?: number
+    age: number
 }
 
 const defaultStyle: CSSProperties = {
@@ -27,11 +27,13 @@ interface MouseTrailProps {
     lag?: number;
 }
 
-export function MouseTrail({lineDuration, lineWidthStart, strokeColor, lag}: MouseTrailProps): JSX.Element {
-    lineDuration ||= 1;
-    lineWidthStart ||= 8;
-    strokeColor ||= `rgb(${[255, 0, 0].join(', ')})`;
-    lag ||= 0.92;
+export function MouseTrail(props: MouseTrailProps): JSX.Element {
+    const {
+        lineDuration = 1,
+        lineWidthStart = 8,
+        strokeColor = `rgb(${[255, 0, 0].join(', ')})`,
+        lag = 0.92
+    } = props;
 
     const MAX_AGE = lineDuration * 1000 / 60;
 
