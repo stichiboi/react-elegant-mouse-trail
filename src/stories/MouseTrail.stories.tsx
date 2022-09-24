@@ -19,7 +19,7 @@ export default {
         },
         lag: {
             control: {
-                type: 'range', min: '0.1', max: '0.99', step: '0.01'
+                type: 'range', min: '0', max: '0.99', step: '0.01'
             }
         },
         lineDuration: {
