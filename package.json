@@ -3,6 +3,7 @@
   "version": "0.1.2",
   "description": "Add some spice to your mouse cursor",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "test": "npm test",
     "storybook": "start-storybook -p 6006",
