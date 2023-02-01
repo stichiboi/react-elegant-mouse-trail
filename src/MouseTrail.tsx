@@ -1,5 +1,5 @@
-import {CSSProperties, useCallback, useEffect, useRef} from "react";
-import {CanvasAnimation} from "./CanvasAnimation";
+import { CSSProperties, useCallback, useEffect, useRef } from "react";
+import { CanvasAnimation, ElementProps } from "./CanvasAnimation";
 
 interface Coords {
     x: number,
@@ -20,7 +20,7 @@ const defaultStyle: CSSProperties = {
     left: 0,
 }
 
-interface MouseTrailProps {
+interface MouseTrailProps extends ElementProps {
     lineDuration?: number;
     lineWidthStart?: number;
     strokeColor?: string;
@@ -32,12 +32,14 @@ export function MouseTrail(props: MouseTrailProps): JSX.Element {
         lineDuration = 1,
         lineWidthStart = 8,
         strokeColor = `rgb(${[255, 0, 0].join(', ')})`,
-        lag = 0.92
+        lag = 0.92,
+        style = defaultStyle,
+        ...elementProps
     } = props;
 
     const MAX_AGE = lineDuration * 1000 / 60;
 
-    const mouseLocation = useRef<Coords>({x: 0, y: 0});
+    const mouseLocation = useRef<Coords>({ x: 0, y: 0 });
     const points = useRef<Point[]>([]);
 
     const updateMouse = useCallback((event: MouseEvent) => {
@@ -86,7 +88,7 @@ export function MouseTrail(props: MouseTrailProps): JSX.Element {
         const lastPoint: Point = points.current[points.current.length - 1] || mouse;
         const x = mouse.x - (mouse.x - lastPoint.x) * lag;
         const y = mouse.y - (mouse.y - lastPoint.y) * lag;
-        points.current.push({x, y, age: 0});
+        points.current.push({ x, y, age: 0 });
     }, [mouseLocation, points, lag]);
 
     useEffect(() => {
@@ -99,7 +101,8 @@ export function MouseTrail(props: MouseTrailProps): JSX.Element {
 
     return (
         <CanvasAnimation
-            style={defaultStyle}
+            {...elementProps}
+            style={style}
             draw={draw}
             animatePoints={animatePoints}/>
     )

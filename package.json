@@ -1,6 +1,6 @@
 {
   "name": "@stichiboi/react-elegant-mouse-trail",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "private": false,
   "description": "Add some spice to your mouse cursor",
   "main": "lib/index.js",
@@ -42,12 +42,12 @@
   "devDependencies": {
     "@babel/core": "^7.19.1",
     "@storybook/addon-actions": "^6.5.12",
-    "@storybook/addon-essentials": "^6.5.12",
+    "@storybook/addon-essentials": "^6.4.22",
     "@storybook/addon-interactions": "^6.5.12",
     "@storybook/addon-links": "^6.5.12",
     "@storybook/builder-webpack5": "^6.5.12",
     "@storybook/manager-webpack5": "^6.5.12",
-    "@storybook/react": "^6.5.12",
+    "@storybook/react": "^6.1.21",
     "@storybook/testing-library": "^0.0.13",
     "@types/react": "^18.0.21",
     "typescript": "^4.8.3"

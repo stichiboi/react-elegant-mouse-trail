@@ -1,16 +1,21 @@
 import { CSSProperties, MutableRefObject, useCallback, useEffect, useRef } from "react";
 
 
-interface CanvasAnimationProps {
-    style: CSSProperties,
+export interface ElementProps {
+    style?: CSSProperties,
+    className?: string
+}
+
+interface CanvasAnimationProps extends ElementProps {
+
     draw: (canvas: HTMLCanvasElement) => unknown,
     animatePoints: (ctx: CanvasRenderingContext2D) => unknown
 }
 
 export function CanvasAnimation({
-                                    style,
                                     draw,
-                                    animatePoints
+                                    animatePoints,
+                                    ...elementProps
                                 }: CanvasAnimationProps): JSX.Element {
     const canvas = useRef<HTMLCanvasElement>() as MutableRefObject<HTMLCanvasElement>;
     const context = useRef<CanvasRenderingContext2D>();
@@ -58,6 +63,6 @@ export function CanvasAnimation({
     }, [context, canvas, loop, resizeCanvas]);
 
     return (
-        <canvas ref={canvas} style={style}/>
+        <canvas ref={canvas} {...elementProps}/>
     );
 }
