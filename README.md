@@ -10,6 +10,20 @@ Install with
 npm i @stichiboi/react-elegant-mouse-trail
 ```
 
+Then use it in your components
+```typescript jsx
+import { MouseTrail } from "@stichiboi/react-elegant-mouse-trail";
+
+export function Layout({ children }: { children: ReactNode }): JSX.Element {
+    return (
+        <>
+            <MouseTrail strokeColor={"#FF8541"}/>
+            <main>{children}</main>
+        </>
+    );
+}
+```
+
 ## Demo
 
 [See it in action](https://stichiboi-website-next.vercel.app/)
