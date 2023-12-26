@@ -1,6 +1,6 @@
 {
   "name": "@stichiboi/react-elegant-mouse-trail",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "private": false,
   "description": "Add some spice to your mouse cursor",
   "main": "lib/index.js",
@@ -36,8 +36,8 @@
   },
   "homepage": "https://github.com/stichiboi/react-elegant-mouse-trail#readme",
   "peerDependencies": {
-    "react": ">=16.0.0",
-    "react-dom": ">=16.0.0"
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
