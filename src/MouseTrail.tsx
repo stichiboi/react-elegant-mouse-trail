@@ -64,7 +64,7 @@ export function MouseTrail(props: MouseTrailProps): JSX.Element {
         ctx.fill();
     }, []);
 
-    const animatePoints = useCallback((ctx: CanvasRenderingContext2D) => {
+    const draw = useCallback((ctx: CanvasRenderingContext2D) => {
         ctx.clearRect(
             0, 0,
             ctx.canvas.width,
@@ -83,7 +83,7 @@ export function MouseTrail(props: MouseTrailProps): JSX.Element {
         });
     }, [points, makePath, MAX_AGE, lineWidthStart, strokeColor]);
 
-    const draw = useCallback(() => {
+    const move = useCallback(() => {
         const mouse = mouseLocation.current;
         const lastPoint: Point = points.current[points.current.length - 1] || mouse;
         const x = mouse.x - (mouse.x - lastPoint.x) * lag;
@@ -103,7 +103,11 @@ export function MouseTrail(props: MouseTrailProps): JSX.Element {
         <CanvasAnimation
             {...elementProps}
             style={style}
+            move={move}
             draw={draw}
-            animatePoints={animatePoints}/>
+            onContextCreate={ctx => {
+                ctx.lineJoin = "round";
+            }}
+        />
     )
 }

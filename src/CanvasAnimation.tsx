@@ -1,4 +1,4 @@
-import { CSSProperties, MutableRefObject, useCallback, useEffect, useRef } from "react";
+import {CSSProperties, MutableRefObject, useCallback, useEffect, useRef} from "react";
 
 
 export interface ElementProps {
@@ -7,14 +7,15 @@ export interface ElementProps {
 }
 
 interface CanvasAnimationProps extends ElementProps {
-
-    draw: (canvas: HTMLCanvasElement) => unknown,
-    animatePoints: (ctx: CanvasRenderingContext2D) => unknown
+    move?: (canvas: HTMLCanvasElement) => unknown,
+    draw: (ctx: CanvasRenderingContext2D) => unknown,
+    onContextCreate?: (ctx: CanvasRenderingContext2D) => unknown
 }
 
 export function CanvasAnimation({
+                                    move,
                                     draw,
-                                    animatePoints,
+                                    onContextCreate,
                                     ...elementProps
                                 }: CanvasAnimationProps): JSX.Element {
     const canvas = useRef<HTMLCanvasElement>() as MutableRefObject<HTMLCanvasElement>;
@@ -28,17 +29,17 @@ export function CanvasAnimation({
     }, [context]);
 
     // wrap in refs since it will be used as an animation frame callback
-    const drawRef = useRef(draw);
-    const animatePointsRef = useRef(animatePoints);
+    const drawRef = useRef(move);
+    const animatePointsRef = useRef(draw);
     const animationFrameIdRef = useRef(0);
 
     useEffect(() => {
-        drawRef.current = draw;
-        animatePointsRef.current = animatePoints;
-    }, [draw, drawRef, animatePointsRef, animatePoints]);
+        drawRef.current = move;
+        animatePointsRef.current = draw;
+    }, [move, drawRef, animatePointsRef, draw]);
 
     const loop = useCallback(() => {
-        if (canvas.current) {
+        if (canvas.current && drawRef.current) {
             drawRef.current(canvas.current);
         }
         if (context.current) {
@@ -57,11 +58,12 @@ export function CanvasAnimation({
     useEffect(() => {
         const tempContext = canvas.current.getContext('2d');
         if (!tempContext) throw Error("Cannot create canvas context");
-        tempContext.lineJoin = "round";
+        if (onContextCreate) {
+            onContextCreate(tempContext);
+        }
         context.current = tempContext;
 
         window.addEventListener('resize', resizeCanvas);
-
         resizeCanvas();
         return () => {
             window.removeEventListener('resize', resizeCanvas);
