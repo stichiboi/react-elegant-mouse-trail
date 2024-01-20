@@ -21,12 +21,15 @@ export function CanvasAnimation({
     const canvas = useRef<HTMLCanvasElement>() as MutableRefObject<HTMLCanvasElement>;
     const context = useRef<CanvasRenderingContext2D>();
 
-    const resizeCanvas = useCallback(() => {
+    const updateContext = useCallback(() => {
         if (context.current?.canvas) {
             context.current.canvas.width = window.innerWidth;
             context.current.canvas.height = window.innerHeight
         }
-    }, [context]);
+        if (onContextCreate && context.current) {
+            onContextCreate(context.current);
+        }
+    }, [context, onContextCreate]);
 
     // wrap in refs since it will be used as an animation frame callback
     const drawRef = useRef(move);
@@ -56,19 +59,15 @@ export function CanvasAnimation({
     }, []);
 
     useEffect(() => {
-        const tempContext = canvas.current.getContext('2d');
+        const tempContext = canvas.current.getContext("2d");
         if (!tempContext) throw Error("Cannot create canvas context");
-        if (onContextCreate) {
-            onContextCreate(tempContext);
-        }
         context.current = tempContext;
-
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+        window.addEventListener("resize", updateContext);
+        updateContext();
         return () => {
-            window.removeEventListener('resize', resizeCanvas);
+            window.removeEventListener("resize", updateContext);
         }
-    }, [context, canvas, loop, resizeCanvas]);
+    }, [context, canvas, loop, updateContext]);
 
     return (
         <canvas ref={canvas} {...elementProps}/>

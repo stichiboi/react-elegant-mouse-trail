@@ -1,6 +1,6 @@
 {
   "name": "@stichiboi/react-elegant-mouse-trail",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "description": "Add some spice to your mouse cursor",
   "main": "lib/index.js",
